@@ -1,6 +1,9 @@
 #!python
 
-from bases import decode, encode, convert
+from home_base import base_to_ten as decode
+from home_base import ten_to_base as encode
+from home_base import base_to_base as convert
+
 import unittest
 
 
