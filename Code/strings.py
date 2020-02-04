@@ -1,10 +1,14 @@
 #!python
+import s3
 
 def contains(text, pattern):
     """Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement contains here (iteratively and/or recursively)
+    if s3.substring_in(text, pattern) is not None:
+        return True
+    else:
+        return False
 
 
 def find_index(text, pattern):
@@ -12,7 +16,7 @@ def find_index(text, pattern):
     or None if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement find_index here (iteratively and/or recursively)
+    return s3.substring_in(text, pattern)
 
 
 def find_all_indexes(text, pattern):
@@ -20,7 +24,7 @@ def find_all_indexes(text, pattern):
     or an empty list if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
-    # TODO: Implement find_all_indexes here (iteratively and/or recursively)
+    return s3.substring_all(text, pattern)
 
 
 def test_string_algorithms(text, pattern):

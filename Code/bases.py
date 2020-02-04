@@ -1,5 +1,5 @@
 #!python
-
+from home_base import base_to_base as convert
 import string
 # Hint: Use these string constants to encode/decode hexadecimal digits and more
 # string.digits is '0123456789'
@@ -42,7 +42,7 @@ def encode(number, base):
     # ...
 
 
-def convert(digits, base1, base2):
+def bonvert(digits, base1, base2):
     """Convert given digits in base1 to digits in base2.
     digits: str -- string representation of number (in base1)
     base1: int -- base of given number
