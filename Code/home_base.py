@@ -1,13 +1,19 @@
 import math
 
 def ten_to_base(num_in, base_out):  
+    neg_flag = False
     char_key = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    char_key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    # char_key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    if num_in < 0:
+        num_in = -num_in
+        neg_flag = True
     num_in = int(num_in)
     power = int(math.log(num_in, base_out))
     retlist = []
     temp_num = num_in
     wring = ''
+    if neg_flag:
+        wring += '-'
 
     while power >= 0:
         place = int(temp_num / (base_out ** power))
@@ -20,9 +26,13 @@ def ten_to_base(num_in, base_out):
 
 def base_to_ten(num_in, base_in):
     num_in = str(num_in)
-    char_key = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    char_key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    neg_mult = 1
     retlist = []
+    if num_in and num_in[0] == '-':
+        num_in = num_in[1:]
+        neg_mult = -1
+    char_key = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    # char_key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
     for char in num_in:
         retlist.append(char_key.find(char))
     power = len(retlist) - 1
@@ -30,12 +40,13 @@ def base_to_ten(num_in, base_in):
     for char in retlist:
         retcount += char * (base_in ** power)
         power -= 1
+    retcount *= neg_mult
     return retcount
 
 def base_to_ten_krunk(num_in, base_in):
     num_in = str(num_in)
     char_key = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    char_key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    # char_key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
     retlist = []
     for char in num_in:
         retlist.append(char_key.find(char))
