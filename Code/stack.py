@@ -1,7 +1,33 @@
 #!python
 
 from linkedlist import LinkedList
+from ihop import IHOP_LL
+from ihop import IHOP_Array
 
+class Node:
+    def __init__(self, next=None, data=None):
+        self.next
+        self.data
+
+class LinkedList:
+    def __init__(self, starter_list=None):
+        self.length = 0
+        self.head
+        self.tail
+
+        for item in starter_list:
+            pass
+    
+    def is_empty(self):
+        if self.length == 0:
+            return True
+        return False
+
+    def length(self):
+        return self.count
+
+    def append(self, item):
+        pass
 
 # Implement LinkedStack below, then change the assignment at the bottom
 # to use this Stack implementation to verify it passes all tests
@@ -87,5 +113,5 @@ class ArrayStack(object):
 
 # Implement LinkedStack and ArrayStack above, then change the assignment below
 # to use each of your Stack implementations to verify they each pass all tests
-Stack = LinkedStack
+Stack = IHOP_LL
 # Stack = ArrayStack

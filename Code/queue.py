@@ -1,6 +1,7 @@
 #!python
 
-from linkedlist import LinkedList
+from lonkedlist import LonkedList as LinkedList
+from q import LinkedQ, ArrayQ
 
 
 # Implement LinkedQueue below, then change the assignment at the bottom
@@ -87,5 +88,5 @@ class ArrayQueue(object):
 
 # Implement LinkedQueue and ArrayQueue above, then change the assignment below
 # to use each of your Queue implementations to verify they each pass all tests
-Queue = LinkedQueue
+Queue = ArrayQ
 # Queue = ArrayQueue

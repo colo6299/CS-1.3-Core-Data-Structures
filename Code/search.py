@@ -1,4 +1,5 @@
 #!python
+import math
 
 def linear_search(array, item):
     """return the first index of item in array or None if item is not found"""
@@ -39,8 +40,9 @@ def binary_search_iterative(array, item):
     count = 0
     #while (input() + 'k') is not None:
 
+    loops = math.log2(len(array)) + 5 
     # note: doesn't seem to work reliably on lists of length >10715086071862673209484250490600018105614048117055336074437503883703510511249361224931983788156958581275946729175531468251871452856923140435984577574698574803934567774824230985421074605062371141877954182153046474983581941267398767559165543946077062914571196477686542167660429831652624386837205668069376
-    while count < 100:
+    while count < loops:
         helta = int((right_bound + left_bound) / 2)
         #print(left_bound)
         #print(str(helta))

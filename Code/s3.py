@@ -36,3 +36,16 @@ def search_jenga(text, term, index):
         if term[j] != text[index + j]:
             return
     return index
+
+def hybrid_s3(text, term):
+    associator_dict = {}
+
+
+    #build associator dict entries
+    for char in term:
+        associator_dict[char] = list()
+    '''
+    for 
+    top_index = len(text) - len(term)
+    shift = 0
+    '''
