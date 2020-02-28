@@ -14,6 +14,21 @@ def is_palindrome_iterative(text_in):
             return False
     return True
 
+# Yeah, it's a little lazy... it's 3am, whadda ya expect?
+def is_palindrome_recursive(text_in, lower_index=0):
+    text = clean_string(text_in)  # meh
+    if len(text) < 2:  # meh
+        return True
+    if lower_index > len(text)//2:
+        return True
+    if text[lower_index] is text[len(text) - 1 - lower_index]:
+        return is_palindrome_recursive(text_in, lower_index + 1)
+    else:
+        return False
+    
+
+# let the record state this monstronsity was the product of coding 
+# several days into being awake (this was 2 hours of ""work""")
 def is_palindrome_iterative_old(text_in):
     text = clean_string(text_in)
     print(text)

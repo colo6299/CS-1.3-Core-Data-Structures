@@ -1,5 +1,6 @@
 #!python
 from racecar import is_palindrome_iterative as ip_iter
+from racecar import is_palindrome_recursive as ip_recr
 
 import string
 # Hint: Use these string constants to ignore capitalization and/or punctuation
@@ -14,8 +15,8 @@ def is_palindrome(text):
     # implement is_palindrome_iterative and is_palindrome_recursive below, then
     # change this to call your implementation to verify it passes all tests
     assert isinstance(text, str), 'input is not a string: {}'.format(text)
-    return is_palindrome_iterative(text)
-    # return is_palindrome_recursive(text)
+    # return is_palindrome_iterative(text)
+    return is_palindrome_recursive(text)
 
 
 def is_palindrome_iterative(text):
@@ -27,7 +28,7 @@ def is_palindrome_iterative(text):
 
 def is_palindrome_recursive(text, left=None, right=None):
     # TODO: implement the is_palindrome function recursively here
-    pass
+    return ip_recr(text)
     # once implemented, change is_palindrome to call is_palindrome_recursive
     # to verify that your iterative implementation passes all tests
 
