@@ -7,6 +7,15 @@ def clean_string(text):
 
 def is_palindrome_iterative(text_in):
     text = clean_string(text_in)
+    if len(text) < 2:
+        return True
+    for i in range(len(text)//2):
+        if text[i] is not text[len(text) - 1 - i]:
+            return False
+    return True
+
+def is_palindrome_iterative_old(text_in):
+    text = clean_string(text_in)
     print(text)
     print(len(text))
 
