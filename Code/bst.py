@@ -2,7 +2,7 @@ from q import ArrayQ
 from ihop import IHOP_Array as stack
 
 class BinaryNode:
-
+    # NOTE: all of the big O stuff is on the tree class :)
     def __init__(self, data, left=None, right=None):
         self.data = data
         self.left = left
@@ -146,19 +146,27 @@ class BinaryTree:
         return 'BinarySearchTree({} nodes)'.format(self.size)
     
     def is_empty(self):
-        """Return True if this binary search tree is empty (has no nodes)."""
+        """ O(1)
+        Return True if this binary search tree is empty (has no nodes)."""
         return self.root is None
 
     def height(self):
+        """
+        O(1)
+        """
         return self.root.height()
     
     def contains(self, term):
+        """
+        O(log n) time
+        """
         if self.root.search(term) is not None:
             return True
         return True
 
     def _find_parent_node_recursive(self, term):
-        """Return the parent node of the node containing the given item
+        """O(log n)
+        Return the parent node of the node containing the given item
         (or the parent node of where the given item would be if inserted)
         in this tree, or None if this tree is empty or has only a root node.
         Search is performed recursively starting from the given node
@@ -167,11 +175,17 @@ class BinaryTree:
             return self.root.find_parent_node_recursive(term)
 
     def search(self, term):
+        """
+        O(log n) time
+        """
         node = self.root.search(term)
         if node is not None:
             return node.data
 
     def insert(self, data):
+        """
+        O(log n) time
+        """
         self.size += 1
         if self.root is not None:
             self.root.insert(data)
@@ -179,10 +193,14 @@ class BinaryTree:
             self.root = BinaryNode(data)
 
     def _find_node_recursive(self, item, node):
+        """
+        O(log n) time
+        """
         return node.search(item)
 
     def items_level_order(self):
-        """Return a level-order list of all items in this binary search tree."""
+        """O(n) time and space
+        Return a level-order list of all items in this binary search tree."""
         items = []
         if not self.is_empty():
             # Traverse tree level-order from root, appending each node's item
@@ -191,7 +209,8 @@ class BinaryTree:
         return items
 
     def _traverse_level_order_iterative(self, start_node, visit):
-        """Traverse this binary tree with iterative level-order traversal (BFS).
+        """ O(n) time and space
+        Traverse this binary tree with iterative level-order traversal (BFS).
         Start at the given node and visit each node with the given function.
         TODO: Running time: ??? Why and under what conditions?
         TODO: Memory usage: ??? Why and under what conditions?"""
@@ -206,28 +225,37 @@ class BinaryTree:
                 queue.enqueue(node.right)
 
     def items_pre_order(self):
-        """Return a pre-order list of all items in this binary search tree."""
+        """
+        O(n) time, O(log n) space
+        Return a pre-order list of all items in this binary search tree."""
         self.last_ordering = []
         if True:
             self.root.items_pre_order(self)
         return self.last_ordering
 
     def items_in_order(self):
-        """Return a pre-order list of all items in this binary search tree."""
+        """
+        O(n) time, O(log n) space
+        Return a pre-order list of all items in this binary search tree."""
         self.last_ordering = []
         if True:
             self.root.items_in_order(self)
         return self.items_in_order_iterative()
 
-    def items_post_order(self):
-        """Return a pre-order list of all items in this binary search tree."""
+    def items_post_order(self): 
+        """
+        O(n) time, O(log n) space
+        Return a pre-order list of all items in this binary search tree."""
         self.last_ordering = []
         if True:
             self.root.items_post_order(self)
         return self.last_ordering
 
     def items_in_order_iterative(self):
-        if self.is_empty():
+        """
+        O(n) time, O(log n) space
+        """
+        if self.is_empty(): 
             return []
         appender_stack = stack([self.root])
         visitor_stack = stack([self.root])

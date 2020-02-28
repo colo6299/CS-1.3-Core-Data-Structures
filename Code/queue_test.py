@@ -68,6 +68,5 @@ class QueueTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             q.dequeue()
 
-
 if __name__ == '__main__':
     unittest.main()
