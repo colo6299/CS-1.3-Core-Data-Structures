@@ -25,7 +25,7 @@ class Hashbrowns:
 
     def keys(self):
         """Return a list of all keys in this hash table.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: O(b) best O(n + b) average/worst"""
         # Collect all keys in each of the buckets
         all_keys = []
         for bucket in self.buckets:
@@ -35,7 +35,7 @@ class Hashbrowns:
 
     def values(self):
         """Return a list of all values in this hash table.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time:  O(b) best O(n + b) average/worst"""
         # Collect all values in each of the buckets
         all_values = []
         for bucket in self.buckets:
@@ -45,16 +45,16 @@ class Hashbrowns:
 
     def items(self):
         """Return a list of all entries (key-value pairs) in this hash table.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: O(b) best O(n + b) average/worst"""
         # Collect all pairs of key-value entries in each of the buckets
         all_items = []
         for bucket in self.buckets:
             all_items.extend(bucket.items())
         return all_items
 
-    def length(self):
+    def length(self): # 
         """Return the number of key-value entries by traversing its buckets.
-        Best and worst case running time: ??? under what conditions? [TODO]"""
+        Best and worst case running time: O(1) best O(n + b) average/worst """
         # Count number of key-value entries in each of the buckets
         item_count = 0
         for bucket in self.buckets:
@@ -63,7 +63,7 @@ class Hashbrowns:
         # Equivalent to this list comprehension:
         return sum(bucket.length() for bucket in self.buckets)
 
-    def contains(self, key):
+    def contains(self, key): 
         """Return True if this hash table contains the given key, or False.
         Best case running time: ??? under what conditions? [TODO]
         Worst case running time: ??? under what conditions? [TODO]"""
@@ -133,8 +133,9 @@ class Hashbrowns:
         """Resize this hash table's buckets and rehash all key-value entries.
         Should be called automatically when load factor exceeds a threshold
         such as 0.75 after an insertion (when set is called with a new key).
-        Best and worst case running time: ??? under what conditions? [TODO]
-        Best and worst case space usage: ??? what uses this memory? [TODO]"""
+        Best and worst case running time: O(n) runtime
+        Best and worst case space usage: O(n), O(n) memory usage based on the
+        new bucket abount"""
         # If unspecified, choose new size dynamically based on current size
         self.size = 0
         if new_size is None:
