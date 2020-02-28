@@ -40,7 +40,6 @@ def search_jenga(text, term, index):
 def hybrid_s3(text, term):
     associator_dict = {}
 
-
     #build associator dict entries
     for char in term:
         associator_dict[char] = list()
