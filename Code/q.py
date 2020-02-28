@@ -125,6 +125,12 @@ class ArrayDeque:
             return self.list[0]
         return
 
+    def enqueue(self, item):
+        return self.push_back(item)
+
+    def dequeue(self):
+        return self.pop_front()
+
     def push_back(self, item):
         """
         O(1)

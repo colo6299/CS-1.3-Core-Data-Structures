@@ -1,7 +1,5 @@
 #!python
-
-from queue import Queue
-from q import ArrayDeque
+from q import ArrayDeque as Queue
 import unittest
 
 
@@ -67,6 +65,13 @@ class QueueTest(unittest.TestCase):
         assert q.is_empty() is True
         with self.assertRaises(ValueError):
             q.dequeue()
+
+    def test_backs(self):
+        q = Queue(['A', 'B', 'C'])
+        assert q.pop_back() == 'C'
+        q.push_front('C')
+        assert q.back() == 'B'
+        assert q.length() == 3
 
 
 if __name__ == '__main__':
