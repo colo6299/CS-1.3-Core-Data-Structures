@@ -2,7 +2,7 @@
 
 from strings import contains, find_index, find_all_indexes
 import unittest
-
+import random
 
 class StringsTest(unittest.TestCase):
 
@@ -77,6 +77,24 @@ class StringsTest(unittest.TestCase):
         # TODO: Write more test cases that check complex patterns or edge cases
         # You'll need a lot more than this to test your algorithm's robustness
         # ...
+
+    def test_random_strings_with_matching(self):
+        tstring = ''
+        for i in range(10000):
+            tstring += chr(random.randint(96, 120))
+        lwr = random.randint(0, 10000)
+
+        tterm = tstring[lwr:random.randint(lwr, 10000)]
+        assert contains(tstring, tterm)
+
+        tterm = tstring[lwr:random.randint(lwr, 10000)]
+        assert contains(tstring, tterm)
+
+        tterm = tstring[lwr:random.randint(lwr, 10000)]
+        assert contains(tstring, tterm)
+
+        tterm = tstring[lwr:random.randint(lwr, 10000)]
+        assert contains(tstring, tterm)
 
     def test_find_all_indexes_with_matching_patterns(self):
         # Positive test cases (examples) with matching patterns
