@@ -5,6 +5,7 @@ import unittest
 # Python 2 and 3 compatibility: unittest module renamed this assertion method
 if not hasattr(unittest.TestCase, 'assertCountEqual'):
     unittest.TestCase.assertCountEqual = unittest.TestCase.assertItemsEqual
+import random
 
 
 class HashTableTest(unittest.TestCase):
@@ -44,6 +45,12 @@ class HashTableTest(unittest.TestCase):
         self.assertCountEqual(ht.items(), [('I', 1), ('V', 5)])
         ht.set('X', 10)
         self.assertCountEqual(ht.items(), [('I', 1), ('V', 5), ('X', 10)])
+
+    def test_collisions_2(self):
+        ht = HashTable()
+        #statistically insignifigant chance of there being no collisions
+        for i in range(1000):
+            ht.set(random.randint(0, 100000), random.random())
 
     def test_length(self):
         ht = HashTable()
