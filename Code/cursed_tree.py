@@ -1,12 +1,11 @@
 from q import ArrayQ
 from ihop import IHOP_Array as stack
 
-class BinaryNode:
-    # NOTE: all of the big O stuff is on the tree class :)
-    def __init__(self, data, left=None, right=None):
-        self.data = data
-        self.left = left
-        self.right = right
+class CursedNode:
+    # NOTE: I regret my choices in life
+    def __init__(self, _next, data):
+        self.next = _next
+        self.data = data 
 
     def __repr__(self):
         """Return a string representation of this binary tree node."""
@@ -16,17 +15,17 @@ class BinaryNode:
         if self.data == term:
             return self
         else:
-            if self.left is not None:
-                l = self.left.search(term)
+            if self.next.data is not None:
+                l = self.next.data.search(term)
                 if l is not None:
                     return l
-            if self.right is not None:
-                r = self.right.search(term)
+            if self.next.next.data is not None:
+                r = self.next.next.data.search(term)
                 if r is not None:
                     return r
 
     def is_leaf(self):
-        if (self.left is None and self.right is None):
+        if (self.next.data is None and self.next.next.data is None):
             return True
         return False
 
@@ -38,45 +37,45 @@ class BinaryNode:
         right = 0
         if self.is_leaf():
             return 0
-        if self.left is not None:
-            left = self.left.height()
-        if self.right is not None:
-            right = self.right.height()   
+        if self.next.data is not None:
+            left = self.next.data.height()
+        if self.next.next.data is not None:
+            right = self.next.next.data.height()   
         if left > right:
             return left + 1
         return right + 1
 
     def insert(self, data):
         if data < self.data:
-            if self.left is not None:
-                self.left.insert(data)
+            if self.next.data is not None:
+                self.next.data.insert(data)
             else:
-                self.left = BinaryNode(data)
+                self.next.data = CursedNode(CursedNode(CursedNode()), data)
         else:
-            if self.right is not None:
-                self.right.insert(data)
+            if self.next.next.data is not None:
+                self.next.next.data.insert(data)
             else:
-                self.right = BinaryNode(data)
+                self.next.next.data = CursedNode(CursedNode(CursedNode()), data)
 
     def items_pre_order(self, tree):
         tree.last_ordering.append(self.data)
-        if self.left is not None:
-            self.left.items_pre_order(tree)
-        if self.right is not None:
-            self.right.items_pre_order(tree)
+        if self.next.data is not None:
+            self.next.data.items_pre_order(tree)
+        if self.next.next.data is not None:
+            self.next.next.data.items_pre_order(tree)
 
     def items_in_order(self, tree):
-        if self.left is not None:
-            self.left.items_in_order(tree)
+        if self.next.data is not None:
+            self.next.data.items_in_order(tree)
         tree.last_ordering.append(self.data)
-        if self.right is not None:
-            self.right.items_in_order(tree)
+        if self.next.next.data is not None:
+            self.next.next.data.items_in_order(tree)
 
     def items_post_order(self, tree):
-        if self.left is not None:
-            self.left.items_post_order(tree)
-        if self.right is not None:
-            self.right.items_post_order(tree)
+        if self.next.data is not None:
+            self.next.data.items_post_order(tree)
+        if self.next.next.data is not None:
+            self.next.next.data.items_post_order(tree)
         tree.last_ordering.append(self.data)
 
     def find_parent_node_recursive(self, term, parent=None):
@@ -89,12 +88,12 @@ class BinaryNode:
         if self.data == term:
             return parent
         else:
-            if self.left is not None:
-                l = self.left.search(term, self)
+            if self.next.data is not None:
+                l = self.next.data.search(term, self)
                 if l is not None:
                     return l
-            if self.right is not None:
-                r = self.right.search(term, self)
+            if self.next.next.data is not None:
+                r = self.next.next.data.search(term, self)
                 if r is not None:
                     return r
 
@@ -108,23 +107,30 @@ class BinaryNode:
         if self.data == term:
             return parent, self
         else:
-            if self.left is not None:
-                l = self.left.search(term, self)
+            if self.next.data is not None:
+                l = self.next.data.search(term, self)
                 if l is not None:
                     return l
-            if self.right is not None:
-                r = self.right.search(term, self)
+            if self.next.next.data is not None:
+                r = self.next.next.data.search(term, self)
                 if r is not None:
                     return r
 
     def predecessor(self, parent):
-        if self.right is not None:
-            return self.right.predecessor(self)
+        if self.next.next.data is not None:
+            return self.next.next.data.predecessor(self)
         self.delete(self)
         return parent, self
+
+    # NOTE: I have elected to instead type this out every time.
+    def binary_node_wink_wink(self, data, left=None, right=None, parent=None):
+        return CursedNode(CursedNode(CursedNode(parent, right), left), data)
         
 
-class BinaryTree:
+class CursedTree:
+    """
+    ALLTHESESQUARESMAKEACIRCLEALLTHESESQUARESMAKEACIRCLEALLTHESESQUARESMAKEACIRCLE
+    """
 
     def __init__(self, items=None):
         """Initialize this binary search tree and insert the given items."""
@@ -184,7 +190,7 @@ class BinaryTree:
         if self.root is not None:
             self.root.insert(data)
         else:
-            self.root = BinaryNode(data)
+            self.root = CursedNode(CursedNode(CursedNode()), data)
 
     def delete(self, item):
         if self.is_empty():
@@ -194,18 +200,18 @@ class BinaryTree:
 
     def _delete_helper(self, node, parent):
         rlink = None
-        if node.left is None:
-            rlink = node.right
-        if node.right is None:
-            rlink = node.left
-        pred = node.left.predecessor()
-        pred[0].right = pred[1].left
+        if node.next.data is None:
+            rlink = node.next.next.data
+        if node.next.next.data is None:
+            rlink = node.next.data
+        pred = node.next.data.predecessor()
+        pred[0].next.next.data = pred[1].next.data
         rlink = pred[1]
 
         if parent.data < node.data:
-            parent.right = rlink
+            parent.next.next.data = rlink
         else:
-            parent.left = rlink
+            parent.next.data = rlink
 
     def _find_node_recursive(self, item, node):
         """
@@ -234,10 +240,10 @@ class BinaryTree:
         while queue.is_empty() is not True:
             node = queue.dequeue()
             visit(node.data)
-            if node.left is not None:
-                queue.enqueue(node.left)
-            if node.right is not None:
-                queue.enqueue(node.right)
+            if node.next.data is not None:
+                queue.enqueue(node.next.data)
+            if node.next.next.data is not None:
+                queue.enqueue(node.next.next.data)
 
     def items_pre_order(self):
         """
@@ -279,18 +285,13 @@ class BinaryTree:
         while appender_stack.is_empty() is False:
             if visitor_stack.is_empty() is False:
                 node = visitor_stack.pop()
-                if node.left is not None:
-                    appender_stack.push(node.left)
-                    visitor_stack.push(node.left)
+                if node.next.data is not None:
+                    appender_stack.push(node.next.data)
+                    visitor_stack.push(node.next.data)
             else:
                 node = appender_stack.pop()
                 items.append(node.data)
-                if node.right is not None:
-                    appender_stack.push(node.right)
-                    visitor_stack.push(node.right)
+                if node.next.next.data is not None:
+                    appender_stack.push(node.next.next.data)
+                    visitor_stack.push(node.next.next.data)
         return items
-        
-            
-                
-        
-        

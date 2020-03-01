@@ -2,7 +2,10 @@
 import s3
 
 def contains(text, pattern):
-    """Return a boolean indicating whether pattern occurs in text."""
+    """
+    O(m*n)... ish.... kinda...
+
+    Return a boolean indicating whether pattern occurs in text."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
     if s3.substring_in(text, pattern) is not None:
@@ -12,7 +15,10 @@ def contains(text, pattern):
 
 
 def find_index(text, pattern):
-    """Return the starting index of the first occurrence of pattern in text,
+    """
+    O(m*n)... ish.... kinda...
+
+    Return the starting index of the first occurrence of pattern in text,
     or None if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
@@ -20,7 +26,10 @@ def find_index(text, pattern):
 
 
 def find_all_indexes(text, pattern):
-    """Return a list of starting indexes of all occurrences of pattern in text,
+    """
+    O(m*n)... ish.... kinda...
+
+    Return a list of starting indexes of all occurrences of pattern in text,
     or an empty list if not found."""
     assert isinstance(text, str), 'text is not a string: {}'.format(text)
     assert isinstance(pattern, str), 'pattern is not a string: {}'.format(text)
