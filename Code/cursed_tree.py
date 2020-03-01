@@ -3,7 +3,7 @@ from ihop import IHOP_Array as stack
 
 class CursedNode:
     # NOTE: I regret my choices in life
-    def __init__(self, _next, data):
+    def __init__(self, _next=None, data=None):
         self.next = _next
         self.data = data 
 
@@ -51,6 +51,21 @@ class CursedNode:
                 self.next.data.insert(data)
             else:
                 self.next.data = CursedNode(CursedNode(CursedNode()), data)
+        else:
+            if self.next.next.data is not None:
+                self.next.next.data.insert(data)
+            else:
+                self.next.next.data = CursedNode(CursedNode(CursedNode()), data)
+
+    def set_insert(self, data):
+        if data < self.data:
+            if self.next.data is not None:
+                self.next.data.insert(data)
+            else:
+                self.next.data = CursedNode(CursedNode(CursedNode()), data)
+        elif data == self.data:
+            self.data = data
+            return True
         else:
             if self.next.next.data is not None:
                 self.next.next.data.insert(data)
@@ -108,11 +123,11 @@ class CursedNode:
             return parent, self
         else:
             if self.next.data is not None:
-                l = self.next.data.search(term, self)
+                l = self.next.data.search(term)
                 if l is not None:
                     return l
             if self.next.next.data is not None:
-                r = self.next.next.data.search(term, self)
+                r = self.next.next.data.search(term)
                 if r is not None:
                     return r
 
@@ -192,13 +207,25 @@ class CursedTree:
         else:
             self.root = CursedNode(CursedNode(CursedNode()), data)
 
-    def delete(self, item):
+
+    def set_insert(self, data):
+        """
+        O(log n) time
+        """
+        if self.root is not None:
+            if self.root.set_insert(data):
+                self.size += 1
+        else:
+            self.root = CursedNode(CursedNode(CursedNode()), data)
+            self.size += 1
+
+    def delete_old(self, item):
         if self.is_empty():
             raise KeyError
-        node_tuple = self.root.find_parent_node_recursive_tuple(item)
+        node_tuple = self.root.find_parent_node_recursive_tuple(item).data
         self._delete_helper(node_tuple[1], node_tuple[0])
 
-    def _delete_helper(self, node, parent):
+    def _delete_helper_old(self, node, parent):
         rlink = None
         if node.next.data is None:
             rlink = node.next.next.data
@@ -207,7 +234,6 @@ class CursedTree:
         pred = node.next.data.predecessor()
         pred[0].next.next.data = pred[1].next.data
         rlink = pred[1]
-
         if parent.data < node.data:
             parent.next.next.data = rlink
         else:

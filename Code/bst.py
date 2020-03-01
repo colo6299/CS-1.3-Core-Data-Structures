@@ -58,6 +58,21 @@ class BinaryNode:
             else:
                 self.right = BinaryNode(data)
 
+    def set_insert(self, data):
+        if data < self.data:
+            if self.left is not None:
+                self.left.insert(data)
+            else:
+                self.left = BinaryNode(data)
+        elif data == self.data:
+            self.data = data
+            return True
+        else:
+            if self.right is not None:
+                self.right.insert(data)
+            else:
+                self.right = BinaryNode(data)
+
     def items_pre_order(self, tree):
         tree.last_ordering.append(self.data)
         if self.left is not None:
@@ -106,21 +121,20 @@ class BinaryNode:
         (give the root node to start recursion)."""
 
         if self.data == term:
-            return parent, self
+            return (parent, self)
         else:
             if self.left is not None:
-                l = self.left.search(term, self)
+                l = self.left.find_parent_node_recursive_tuple(term, self)
                 if l is not None:
                     return l
             if self.right is not None:
-                r = self.right.search(term, self)
+                r = self.right.find_parent_node_recursive_tuple(term, self)
                 if r is not None:
                     return r
 
-    def predecessor(self, parent):
+    def predecessor(self, parent=None):
         if self.right is not None:
             return self.right.predecessor(self)
-        self.delete(self)
         return parent, self
         
 
@@ -154,9 +168,9 @@ class BinaryTree:
         """
         O(log n) time
         """
-        if self.root.search(term) is not None:
+        if self.search(term) is not None:
             return True
-        return True
+        return False
 
     def _find_parent_node_recursive(self, term):
         """O(log n)
@@ -186,7 +200,18 @@ class BinaryTree:
         else:
             self.root = BinaryNode(data)
 
-    def delete(self, item):
+    def set_insert(self, data):
+        """
+        O(log n) time
+        """
+        if self.root is not None:
+            if self.root.set_insert(data):
+                self.size += 1
+        else:
+            self.root = BinaryNode(data)
+            self.size += 1
+
+    def delete_old(self, item):
         if self.is_empty():
             raise KeyError
         node_tuple = self.root.find_parent_node_recursive_tuple(item)
@@ -196,16 +221,55 @@ class BinaryTree:
         rlink = None
         if node.left is None:
             rlink = node.right
-        if node.right is None:
+        elif node.right is None:
             rlink = node.left
-        pred = node.left.predecessor()
-        pred[0].right = pred[1].left
-        rlink = pred[1]
+        else:
+            pred = node.left.predecessor()
+            if pred[0] is not None:
+                pred[0].right = pred[1].left
+            rlink = pred[1]
 
-        if parent.data < node.data:
+        if parent is None:
+            self.root = rlink
+        elif parent.data < node.data:
             parent.right = rlink
         else:
             parent.left = rlink
+
+    
+    def delete(self, item):
+        parent_child_nodes = self.root.find_parent_node_recursive_tuple(item)
+        parent_node = parent_child_nodes[0]
+        delete_node = parent_child_nodes[1]
+        left_bool = False
+        if parent_node is not None:
+            if parent_node.left == delete_node:
+                left_bool = True
+
+        if delete_node.left is not None and delete_node.right is not None:
+            pred = delete_node.left.predecessor()
+            retnode = pred[1]
+            if pred[0] is not None:
+                pred[0].right = pred[1].left
+                pred[1].right = delete_node.right
+                pred[1].left = delete_node.left
+            else:
+                pred[1].right = delete_node.right
+            
+        elif delete_node.left is not None:
+            retnode = delete_node.left
+        elif delete_node.right is not None:
+
+            retnode = delete_node.right
+        else:
+            retnode = None
+
+        if parent_node is None:
+            self.root = retnode
+        elif left_bool:
+            parent_node.left = retnode
+        else:
+            parent_node.right = retnode
 
     def _find_node_recursive(self, item, node):
         """
@@ -290,7 +354,67 @@ class BinaryTree:
                     visitor_stack.push(node.right)
         return items
         
-            
+    def items_pre_order_iterative(self):
+        """
+        O(n) time, O(log n) space
+        """
+        if self.is_empty(): 
+            return []
+        appender_stack = stack([self.root])
+        visitor_stack = stack([self.root])
+        items = []
+
+        while appender_stack.is_empty() is False:
+            if visitor_stack.is_empty() is False:
+                node = visitor_stack.pop()
+                if node.left is not None:
+                    items.append(node.data)
+                    appender_stack.push(node.left)
+                    visitor_stack.push(node.left)
+            else:
+                node = appender_stack.pop()
+                if node.right is not None:
+                    items.append(node.data)
+                    appender_stack.push(node.right)
+                    visitor_stack.push(node.right)
+        return items
+
+    def items_post_order_iterative(self):
+        """
+        O(n) time, O(log n) space
+        """
+        if self.is_empty(): 
+            return []
+        appender_stack = stack([self.root])
+        visitor_stack = stack([self.root])
+        items = []
+
+        while appender_stack.is_empty() is False:
+            if visitor_stack.is_empty() is False:
+                node = visitor_stack.pop()
+                if node.left is not None:
+                    items.append(node.data)
+                    appender_stack.push(node.left)
+                    visitor_stack.push(node.left)
+            else:
+                node = appender_stack.pop()
+                if node.right is not None:
+                    appender_stack.push(node.right)
+                    visitor_stack.push(node.right)
+        return items
+        
+def test_treemap():
+    items = [4, 2, 6, 1, 3, 5, 7]
+    c = BinaryTree(items)
+    assert c.contins(4) == True
+    assert c.contains(22) == False
+    c.delete(4)
+    assert c.contains(4) == False
+    c.delete(2)
+    print(c.items_in_order())
+
+if __name__ == "__main__":
+    test_delete()
                 
         
         

@@ -3,6 +3,7 @@
 from linkedlist import LinkedList
 from hash_browns import Hashbrowns as HashTable
 
+
 class HashTaable(object):
 
     def __init__(self, init_size=8):
