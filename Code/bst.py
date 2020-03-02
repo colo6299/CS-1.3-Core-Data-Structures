@@ -211,32 +211,6 @@ class BinaryTree:
             self.root = BinaryNode(data)
             self.size += 1
 
-    def delete_old(self, item):
-        if self.is_empty():
-            raise KeyError
-        node_tuple = self.root.find_parent_node_recursive_tuple(item)
-        self._delete_helper(node_tuple[1], node_tuple[0])
-
-    def _delete_helper(self, node, parent):
-        rlink = None
-        if node.left is None:
-            rlink = node.right
-        elif node.right is None:
-            rlink = node.left
-        else:
-            pred = node.left.predecessor()
-            if pred[0] is not None:
-                pred[0].right = pred[1].left
-            rlink = pred[1]
-
-        if parent is None:
-            self.root = rlink
-        elif parent.data < node.data:
-            parent.right = rlink
-        else:
-            parent.left = rlink
-
-    
     def delete(self, item):
         parent_child_nodes = self.root.find_parent_node_recursive_tuple(item)
         parent_node = parent_child_nodes[0]
