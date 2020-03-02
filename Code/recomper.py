@@ -13,7 +13,7 @@ class Permutator:
         self._permutator(items, [], retlist, length)
         return retlist
 
-    def permutator(self, item_list, cur_list, out_list, p_length):
+    def _permutator(self, item_list, cur_list, out_list, p_length):
         """
         Relatively efficient permutator. Called recursively. No duplicates.
         """
@@ -24,7 +24,7 @@ class Permutator:
         for item in item_list:
             nl = cur_list.copy()
             nl.append(item)
-            self._permutator(incomplete_copy(item_list, item), nl, out_list, p_length)
+            self._permutator(self.incomplete_copy(item_list, item), nl, out_list, p_length)
             
     def incomplete_copy(self, list_in, ignore):
         """
@@ -70,6 +70,37 @@ class Combinator:
         affirmative_list.append(item_list[item_ndx])
         self._combinator(item_list, affirmative_list, item_ndx + 1, out_list, p_length)
         self._combinator(item_list, list(cur_list), item_ndx + 1, out_list, p_length)
+
+
+def test_permutation():
+    p = Permutator()
+
+    ls = p.permutations([1, 2, 3, 4, 5], 5)
+    assert len(ls) == 120
+    assert [3, 2, 1, 4, 5] in ls
+    
+    ls = p.permutations([1, 2, 3, 4, 5, 6, 7], 4)
+    assert len(ls) == 840
+    assert [7, 4, 3, 6] in ls
+
+    ls = p.permutations([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 1)
+    assert len(ls) == 10
+    assert [7] in ls
+
+def test_combination():
+    c = Combinator()
+
+    ls = c.combinations([1, 2, 3, 4, 5], 5)
+    assert len(ls) == 1
+    assert [1, 2, 3, 4, 5] in ls
+    
+    ls = c.combinations([1, 2, 3, 4, 5, 6, 7], 4)
+    assert len(ls) == 35
+    assert [3, 4, 6, 7] in ls  # a quirk of generation ensures an ordered product
+
+    ls = c.combinations([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 1)
+    assert len(ls) == 10
+    assert [7] in ls
 
 if __name__ == "__main__":
     combine = Combinator()
