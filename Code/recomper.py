@@ -52,7 +52,6 @@ class Combinator:
         retlist = []
         self._combinator(items, [], 0, retlist, length)
         return retlist
-        
 
     def _combinator(self, item_list, cur_list, item_ndx, out_list, p_length):
         """
