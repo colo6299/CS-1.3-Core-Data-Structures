@@ -403,18 +403,7 @@ class BinaryTree:
                     visitor_stack.push(node.right)
         return items
         
-def test_treemap():
-    items = [4, 2, 6, 1, 3, 5, 7]
-    c = BinaryTree(items)
-    assert c.contins(4) == True
-    assert c.contains(22) == False
-    c.delete(4)
-    assert c.contains(4) == False
-    c.delete(2)
-    print(c.items_in_order())
 
-if __name__ == "__main__":
-    test_delete()
                 
         
         
