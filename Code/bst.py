@@ -16,14 +16,16 @@ class BinaryNode:
         if self.data == term:
             return self
         else:
-            if self.left is not None:
-                l = self.left.search(term)
-                if l is not None:
-                    return l
-            if self.right is not None:
-                r = self.right.search(term)
-                if r is not None:
-                    return r
+            if term < self.data:
+                if self.left is not None:
+                    l = self.left.search(term)
+                    if l is not None:
+                        return l
+            else:
+                if self.right is not None:
+                    r = self.right.search(term)
+                    if r is not None:
+                        return r
 
     def is_leaf(self):
         if (self.left is None and self.right is None):
