@@ -16,7 +16,7 @@ class Permutator:
 
     def _permutator(self, item_list, cur_list, out_list, p_length):
         """
-        Relatively efficient permutator. Called recursively. No duplicates.
+        Relatively efficient permutator. Called recursively.
         """
         if len(cur_list) == p_length:
             out_list.append(cur_list)
@@ -40,7 +40,7 @@ class Permutator:
             else:
                 new_list.append(item)
         return new_list
-        
+
 
 class Combinator:
 
@@ -54,6 +54,18 @@ class Combinator:
         self._combinator(items, [], 0, retlist, length)
         return retlist
 
+    def combo_compliments(self, items, length):
+        retlist = []
+        self._complimator(items, [False] * len(items), 0, retlist, length)
+        return retlist
+    
+    def compliment(self, cur_list, list_in):
+        retlist = []
+        for item in list_in:
+            if item not in cur_list:
+                retlist.append(item)
+        return retlist
+
     def _combinator(self, item_list, cur_list, item_ndx, out_list, p_length):
         """
         Honestly, this docstring is mostly for style points.
@@ -64,13 +76,34 @@ class Combinator:
             out_list.append(cur_list)
             return
         elif item_ndx > len(item_list) - p_length + len(cur_list):
-            return 
+            return
 
         affirmative_list = list(cur_list)
         affirmative_list.append(item_list[item_ndx])
         self._combinator(item_list, affirmative_list, item_ndx + 1, out_list, p_length)
         self._combinator(item_list, list(cur_list), item_ndx + 1, out_list, p_length)
 
+    def _complimator(self, item_list, cur_list, item_ndx, out_list, p_length):
+
+        if sum(cur_list) == p_length:
+            
+            combination = []
+            compliment = []
+            for index, add in enumerate(cur_list):
+                if add is True:
+                    combination.append(item_list[index])
+                else:
+                    compliment.append(item_list[index])
+
+            out_list.append((combination, compliment))
+            return
+        elif item_ndx > len(item_list) - p_length + sum(cur_list):
+            return
+
+        affirmative_list = list(cur_list)
+        affirmative_list[item_ndx] = True
+        self._complimator(item_list, affirmative_list, item_ndx + 1, out_list, p_length)
+        self._complimator(item_list, list(cur_list), item_ndx + 1, out_list, p_length)
 
 def test_permutation():
     p = Permutator()
@@ -103,7 +136,8 @@ def test_combination():
     assert [7] in ls
 
 if __name__ == "__main__":
-    cermutator = Permutator()
-    cProfile.run('cermutator.permutations(list(\'permutate\'), 9)')
+    #cermutator = Permutator()
+    #cProfile.run('cermutator.permutations(list(\'permutate\'), 9)')
     #print(st)
+    pass
     
