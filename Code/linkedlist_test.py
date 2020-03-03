@@ -2,6 +2,7 @@
 
 from lonkedlist import Node
 from lonkedlist import LonkedList as LinkedList
+from lonkedlist import QuestionableList
 import unittest
 
 
@@ -68,6 +69,24 @@ class LinkedListTest(unittest.TestCase):
         assert ll.size == 3
         # delete operations decrement size
         ll.delete('B')
+        assert ll.size == 2
+        ll.delete('C')
+        assert ll.size == 1
+        ll.delete('A')
+        assert ll.size == 0
+
+    def test_size_ndndn(self):
+        ll = QuestionableList()
+        assert ll.size == 0
+        # append and prepend operations increment size
+        ll.append('B')
+        assert ll.size == 1
+        ll.prepend('A')
+        assert ll.size == 2
+        ll.append('C')
+        assert ll.size == 3
+        # delete operations decrement size
+        ll.backwards_delete('B')
         assert ll.size == 2
         ll.delete('C')
         assert ll.size == 1

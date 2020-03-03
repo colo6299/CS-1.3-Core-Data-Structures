@@ -44,4 +44,4 @@ def base_to_base(num_in, base_in, base_out):
 if __name__ == "__main__":
     print(ten_to_base(101.52, 16))
     print(base_to_ten(101.1101, 2))
-    print(base_to_base(101.11, 2, 13))
+    print(base_to_base(2., 10, 2))

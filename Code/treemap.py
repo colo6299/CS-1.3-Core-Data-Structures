@@ -1,7 +1,7 @@
 from bst import BinaryNode, BinaryTree
 
-class DataPackage(object):
-    
+class KeyValuePackage(object):
+
     def __init__(self, key, value):
         self.key = key
         self.value = value
@@ -56,7 +56,7 @@ class TreeMap:
             yield item.key
 
     def set(self, key, value):
-        self.tree.set_insert(DataPackage(key, value))
+        self.tree.set_insert(KeyValuePackage(key, value))
 
     def get(self, key):
         return self.tree.search(key).value

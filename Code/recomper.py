@@ -1,3 +1,4 @@
+import cProfile
 
 class Permutator:
 
@@ -102,7 +103,7 @@ def test_combination():
     assert [7] in ls
 
 if __name__ == "__main__":
-    combine = Combinator()
-    st = combine.combinations(list('combinate'), 4)
-    print(st)
-    print(len(st))
+    cermutator = Permutator()
+    cProfile.run('cermutator.permutations(list(\'permutate\'), 9)')
+    #print(st)
+    
