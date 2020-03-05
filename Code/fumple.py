@@ -167,12 +167,16 @@ def desort(list_items, list_ndxes):
 
     return retlist
 
-def jumble_runner(meltionary, primary_jumbles=None, final_join=' '):
+def jumble_runner(meltionary, primary_jumbles=None, final_words=None, final_join=' '):
     """
     How do you spell "clodgy"?
     """
+    if final_words is None:
+        secondary_word_lengths = [2, 6]
+
     if primary_jumbles is None:
         primary_jumbles = [
+            ['crtolualca', '----------'],
             ['tefon', '--o-o'],
             ['sokik', 'oo-o-'],
             ['niumem', '----o-'],
@@ -183,7 +187,9 @@ def jumble_runner(meltionary, primary_jumbles=None, final_join=' '):
     for jumble in primary_jumbles:
         answers.append(dejumbler(jumble[0], meltionary))
 
-    secondary_word_lengths = [2, 6]
+    #secondary_word_lengths = [2, 6]
+    #secondary_word_lengths = []
+
     sort_indices = index_sort(secondary_word_lengths)
     secondary_word_lengths = sort_indices[0]
 
@@ -254,15 +260,19 @@ def trash():
     for possible_answer in possible_secondary_answers:
         probable_secondary_answers.append(possible_answer) 
     """
-
-if __name__ == "__main__":
-
+def run():
     #cProfile.run('dictionary_melter()')
-    d = dictionary_melter_std()
-    meltionary_writer(d)
+    #d = dictionary_melter_std()
+    #meltionary_writer(d)
     d = meltionary_reader()
     #meltionary_writer(d)
     #cProfile.run('jumble_runner(d)')
+    #jumble_runner(d, primary_jumbles=[['laisa', '-ooo-'], ['laurr', 'o-o--'], ['bureek', 'oo----'], ['prouot', '--o-oo']], final_join=' and ')
     jumble_runner(d, final_join='-')
     #print(dejumbler('short', d))  # sardine
+
+if __name__ == "__main__":
+    #cProfile.run('run()')
+    run()
+
 
