@@ -75,6 +75,7 @@ class LinkedListTest(unittest.TestCase):
         ll.delete('A')
         assert ll.size == 0
 
+    """
     def test_size_ndndn(self):
         ll = QuestionableList()
         assert ll.size == 0
@@ -92,6 +93,7 @@ class LinkedListTest(unittest.TestCase):
         assert ll.size == 1
         ll.delete('A')
         assert ll.size == 0
+        """
 
     def test_get_at_index(self):
         ll = LinkedList(['A', 'B', 'C'])

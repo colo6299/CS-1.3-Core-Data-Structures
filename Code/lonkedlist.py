@@ -96,8 +96,8 @@ class LonkedList(object):
         count = 0
         new_node = Node(data)
 
-        if index > self.length():
-            raise IndexError
+        if index > self.length() or index < 0:
+            raise ValueError
 
         self.count += 1
         self.size += 1
@@ -106,11 +106,11 @@ class LonkedList(object):
             node = node.next
             count += 1
 
-        if index == self.length():
+        if index == self.length() - 1:
             self.tail = new_node
         
         if index == 0:
-            self.head == new_node
+            self.head = new_node
 
         if node is not None:
             new_node.next = node.next
